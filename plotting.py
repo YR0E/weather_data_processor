@@ -8,8 +8,8 @@ config = {
     "toImageButtonOptions": {
         "format": "png",  # The format of the exported image (png, svg, etc.)
         "filename": "weather_data_plot",  # Default filename
-        # "height": 1080,  # Image height
-        # "width": 1920,   # Image width
+        # "height": 1080,  # Image height 1246 2160
+        # "width": 1920,   # Image width 5760 7168
         "scale": 2.5       # Increase the resolution (scales up the image)
     }
 }
@@ -17,7 +17,13 @@ config = {
 
 def set_default_layout(fig):
     fig.update_layout(
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        legend=dict(
+            orientation="h", 
+            yanchor="bottom", 
+            y=1.02, 
+            xanchor="right", 
+            x=1
+        ),
         height=650, 
         margin=dict(autoexpand=True),
         template="seaborn",
@@ -29,14 +35,32 @@ def plot_weather_data(df):
     #fig = go.Figure()
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-    fig.add_trace(go.Scatter(x=df.index, y=df['Temp Out'], name='Temperature'), secondary_y=False)
-    fig.add_trace(go.Scatter(x=df.index, y=df['Solar Rad.'], name='Solar radiation'), secondary_y=True)
+    fig.add_trace(
+        go.Scatter(
+            x=df.index, 
+            y=df['Temp Out'], 
+            name='Temperature'
+        ), 
+        secondary_y=False
+    )
+    fig.add_trace(
+        go.Scatter(
+            x=df.index, 
+            y=df['Solar Rad.'], 
+            name='Solar radiation'
+        ), 
+        secondary_y=True
+    )
 
     fig.update_layout(
         xaxis=dict(
-            rangeselector=dict(buttons=list([dict(count=1, label="day", step="day", stepmode="backward"),
-                                             dict(count=7, label="week", step="day", stepmode="backward"),
-                                             dict(step="all")])),
+            rangeselector=dict(buttons=list(
+                    [
+                        dict(count=1, label="day", step="day", stepmode="backward"),
+                        dict(count=7, label="week", step="day", stepmode="backward"),
+                        dict(step="all")
+                    ]
+            )),
             rangeslider=dict(visible=True), 
             type="date"),
 
@@ -62,8 +86,12 @@ def plot_processed_data(df, parameters):
        
     fig.update_layout(
         xaxis=dict(
-            rangeselector=dict(buttons=list([dict(count=1, label="day", step="day", stepmode="backward"),
-                                             dict(step="all")])),
+            rangeselector=dict(buttons=list(
+                [
+                    dict(count=1, label="day", step="day", stepmode="backward"),
+                    dict(step="all")
+                ]
+            )),
             rangeslider=dict(visible=True), 
             type="date"),
 
